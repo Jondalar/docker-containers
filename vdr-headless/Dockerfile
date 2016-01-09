@@ -1,5 +1,13 @@
+########################################################
+# yavdr-based-headless docker
+# build on chriszero <zerov83@gmail.com>
+#
+# extended by jondalar for entertain and qnap specifics
+#
+########################################################
+
 FROM chriszero/ubuntu-s6-base
-MAINTAINER chriszero <zerov83@gmail.com>
+MAINTAINER jondalar (alex@iphonedation.com)
 
 WORKDIR /tmp
 
@@ -55,6 +63,11 @@ RUN apt-get update -qq && \
 ADD vdr-plugin-epg2vdr_0.1.12.git20151112.0816-0yavdr2~trustyubuntu1_amd64.deb .
 RUN dpkg -i vdr-plugin-epg2vdr*
 
+RUN apt-get update -qq && \
+        apt-get install -qy --no-install-recommends \
+        vdr-plugin-iptv && \
+        apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 ADD vdr.sh /etc/services.d/vdr/run
 ADD vdr-finish.sh /etc/services.d/vdr/finish
 ADD rsyslog.sh /etc/services.d/rsyslog/run
@@ -62,6 +75,7 @@ ADD rsyslog.sh /etc/services.d/rsyslog/run
 # add configs
 ADD var/lib/vdr/* /var/lib/vdr/
 ADD var/lib/vdr/plugins/streamdev-server/* /var/lib/vdr/plugins/streamdev-server/
+ADD var/lib/vdr/plugins/iptv/* /var/lib/vdr/plugins/iptv/
 RUN rm /etc/vdr/conf.d/*
 ADD etc/vdr/conf.d/* /etc/vdr/conf.d/
 ADD etc/rsyslog.conf /etc/
