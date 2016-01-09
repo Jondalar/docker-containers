@@ -24,7 +24,6 @@ RUN apt-get update -qq && \
 	rsyslog \
 	vdr-plugin-epgsearch \
 	vdr-plugin-femon \
-	vdr-plugin-iptv \
 	vdr-plugin-satip \
 	vdr-plugin-live \
 	vdr-plugin-restfulapi \
@@ -38,30 +37,29 @@ RUN apt-get update -qq && \
 	nano && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD https://github.com/chriszero/vdr-plugin-satip/archive/vdr-2.2.x.tar.gz .
-#COPY vdr-satip-2.2.3.tgz .
-RUN echo deb-src http://ppa.launchpad.net/yavdr/main/ubuntu trusty main >> /etc/apt/sources.list.d/yavdr.list \
- && echo deb-src http://ppa.launchpad.net/yavdr/stable-vdr/ubuntu trusty main >> /etc/apt/sources.list.d/yavdr.list
+#ADD https://github.com/chriszero/vdr-plugin-satip/archive/vdr-2.2.x.tar.gz .
+#RUN echo deb-src http://ppa.launchpad.net/yavdr/main/ubuntu trusty main >> /etc/apt/sources.list.d/yavdr.list \
+# && echo deb-src http://ppa.launchpad.net/yavdr/stable-vdr/ubuntu trusty main >> /etc/apt/sources.list.d/yavdr.list
 
-RUN apt-get update -qq && \
-	apt-get install -qy build-essential && \
-	apt-get build-dep -qy \
-	vdr-plugin-satip && \
-	tar xzf vdr-2.2.x.tar.gz && \
-	cd vdr-plugin-satip* && \
-	make && make install && \
-	apt-get purge -qy binutils build-essential bzip2 cpp cpp-4.8 dpkg-dev fakeroot g++ g++-4.8 gcc \
-			  gcc-4.8 libalgorithm-diff-perl libalgorithm-diff-xs-perl \
-			  libalgorithm-merge-perl libasan0 libatomic1 libc-dev-bin libc6-dev \
-			  libcloog-isl4 libdpkg-perl libfakeroot libfile-fcntllock-perl libgcc-4.8-dev \
-			  libgmp10 libisl10 libitm1 libmpc3 libmpfr4 libquadmath0 libstdc++-4.8-dev \
-			  libtimedate-perl libtsan0 linux-libc-dev make manpages manpages-dev patch \
- 			  xz-utils && \
-	apt-get autoremove -qy $(apt-cache showsrc vdr-plugin-satip | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g') && \ 
-	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+#RUN apt-get update -qq && \
+#	apt-get install -qy build-essential && \
+#	apt-get build-dep -qy \
+#	vdr-plugin-satip && \
+#	tar xzf vdr-2.2.x.tar.gz && \
+#	cd vdr-plugin-satip* && \
+#	make && make install && \
+#	apt-get purge -qy binutils build-essential bzip2 cpp cpp-4.8 dpkg-dev fakeroot g++ g++-4.8 gcc \
+#			  gcc-4.8 libalgorithm-diff-perl libalgorithm-diff-xs-perl \
+#			  libalgorithm-merge-perl libasan0 libatomic1 libc-dev-bin libc6-dev \
+#			  libcloog-isl4 libdpkg-perl libfakeroot libfile-fcntllock-perl libgcc-4.8-dev \
+#			  libgmp10 libisl10 libitm1 libmpc3 libmpfr4 libquadmath0 libstdc++-4.8-dev \
+#			  libtimedate-perl libtsan0 linux-libc-dev make manpages manpages-dev patch \
+#			  xz-utils && \
+#	apt-get autoremove -qy $(apt-cache showsrc vdr-plugin-satip | sed -e '/Build-Depends/!d;s/Build-Depends: \|,\|([^)]*),*\|\[[^]]*\]//g') && \ 
+#	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD vdr-plugin-epg2vdr_0.1.12.git20151112.0816-0yavdr2~trustyubuntu1_amd64.deb .
-RUN dpkg -i vdr-plugin-epg2vdr*
+#ADD vdr-plugin-epg2vdr_0.1.12.git20151112.0816-0yavdr2~trustyubuntu1_amd64.deb .
+#RUN dpkg -i vdr-plugin-epg2vdr*
 
 RUN apt-get update -qq && \
         apt-get install -qy --no-install-recommends \
