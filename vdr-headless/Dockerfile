@@ -16,6 +16,7 @@ RUN apt-get update -qq && \
 	rsyslog \
 	vdr-plugin-epgsearch \
 	vdr-plugin-femon \
+	vdr-plugin-iptv \
 	vdr-plugin-satip \
 	vdr-plugin-live \
 	vdr-plugin-restfulapi \
